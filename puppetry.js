@@ -3,8 +3,8 @@ var puppetry = function puppetry( stringSet ){
 		.normalizePathname( )
 		.pathname( );
 
-	if( pathname in stringSet ){
-		window.location = stringSet[ pathname ][ 0 ];
+	if( pathName in stringSet ){
+		window.location = stringSet[ pathName ][ 0 ];
 	}else{
 		window.location = stringSet[ "/" ][ 0 ];
 	}
