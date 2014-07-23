@@ -1,11 +1,31 @@
-var puppetry = function puppetry( stringSet ){
+var puppetry = function puppetry( stringSet, callback ){
 	var pathName = URI( window.location.href )
 		.normalizePathname( )
 		.pathname( );
 
-	if( pathName in stringSet ){
-		return stringSet[ pathName ][ 0 ];
-	}else{
-		return stringSet[ "/" ][ 0 ];
+	var redirectList = stringSet[ pathname ];
+
+	var redirectProcedureList = [ ];
+
+	var redirectListLength = redirectList.length;
+	for( var index = 0; index < redirectListLength; index++ ){
+		var URL = redirectList[ index ];
+		
+		var redirectProcedure = function redirect( callback ){
+			headbang( URL, function onResponse( isActive ){
+				if( isActive ){
+					callback( URL );
+				}else{
+					callback( );
+				}
+			} );
+		};
+
+		redirectProcedureList.push( redirectProcedure );
 	}
+
+	async.parallel( redirectProcedureList,
+		function onFinalRedirect( URL ){
+			callback( null, URL );
+		} );
 };
