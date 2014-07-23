@@ -3,7 +3,7 @@ var puppetry = function puppetry( stringSet, callback ){
 		.normalizePathname( )
 		.pathname( );
 
-	var redirectList = stringSet[ pathname ];
+	var redirectList = stringSet[ pathName ];
 
 	var redirectProcedureList = [ ];
 
