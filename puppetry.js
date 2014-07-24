@@ -1,4 +1,4 @@
-var puppetry = function puppetry( stringSet, callback ){
+var puppetry = function puppetry( stringSet, callback, acceptOverride ){
 	var pathName = URI( window.location.href )
 		.normalizePathname( )
 		.pathname( );
@@ -12,8 +12,15 @@ var puppetry = function puppetry( stringSet, callback ){
 		var URL = redirectList[ index ];
 		
 		var redirectProcedure = function redirect( callback ){
-			headbang( URL, function onResponse( isActive ){
-				if( isActive ){
+			headbang( URL, function onResponse( error, isActive ){
+                if( error &&
+                    typeof acceptOverride == "function" &&
+                    acceptOverride( error ) )
+                {
+                    console.warn( "URL: " + URL + " has been accepted please redirect at your own risk" );
+                    error.URL = URL;
+                    callback( error );
+                }else if( isActive ){
 					callback( URL );
 				}else{
 					callback( );
