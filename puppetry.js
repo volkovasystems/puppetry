@@ -52,17 +52,40 @@ var puppetry = function puppetry( stringSet, acceptOverride, callback ){
                 var URL = redirectList[ index ];
 
                 var requestResult = headbang( URL );
-                if( acceptOverride( requestResult.error ) ){
-                    console.warn( "URL: " + URL + " has been accepted please redirect at your own risk" );
+
+                console.debug( requestResult );
+
+                if( requestResult.status ){
                     return URL;
-                }else{
-                    return requestResult.error;
+
+                }else if( requestResult.status === null &&
+                    ( index + 1 ) >= redirectListLength )
+                {
+                    if( "error" in requestResult ){
+                        if( acceptOverride( requestResult.error ) ){
+                            console.warn( "URL: " + URL + " has been accepted please redirect at your own risk" );
+                            return URL;
+                        }else{
+                            return requestResult.error;
+                        }
+                    }else{
+                        var error = new Error( "fatal: undetermined redirection procedure" )
+                        console.error( error );
+                        return error;
+                    }
+
+                }else if( requestResult.status === false &&
+                    ( index + 1 ) >= redirectListLength )
+                {
+                    var error = new Error( "fatal: undetermined redirection procedure" )
+                    console.error( error );
+                    return error;
                 }
             }
         }
 
     }else{
-        var error = new Error( "fatal:redirecting url is not registered" );
+        var error = new Error( "fatal: redirecting url is not registered" );
         console.error( error );
 
         if( hasCallback ){
