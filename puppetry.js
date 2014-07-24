@@ -33,6 +33,11 @@ var puppetry = function puppetry( stringSet, callback, acceptOverride ){
 
 	async.parallel( redirectProcedureList,
 		function onFinalRedirect( URL ){
-			callback( null, URL );
+            var error = null;
+            if( URL instanceof Error ){
+                error = URL;
+                URL = error.URL;
+            }
+			callback( error, URL );
 		} );
 };
