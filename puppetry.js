@@ -44,8 +44,10 @@ var puppetry = function puppetry( stringSet, acceptOverride, callback ){
                         error = URL;
                         URL = error.URL;
                     }
+                    
                     callback( error, URL );
                 } );
+
         }else{
             var redirectListLength = redirectList.length;
             for( var index = 0; index < redirectListLength; index++ ){
