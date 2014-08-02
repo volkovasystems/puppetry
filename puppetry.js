@@ -18,7 +18,7 @@ var puppetry = function puppetry( stringSet, acceptOverride, callback ){
                 var URL = redirectList[ index ];
 
                 var redirectProcedure = function redirect( callback ){
-                    headbang( URL, function onResponse( error, isActive ){
+                    headbump( URL, function onResponse( error, isActive ){
                         if( error &&
                             typeof acceptOverride == "function" &&
                             acceptOverride( error ) )

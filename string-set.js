@@ -1,6 +1,7 @@
 var stringSet = {
 	"/": [
-		"http://webnified-volkovasystems.rhcloud.com/"
+		"http://webnified-volkovasystems.rhcloud.com/",
+		"http://webnified.herokuapp.com/"
 	],
 
 	"/data/image/world/dominator": [
